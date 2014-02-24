@@ -17,18 +17,45 @@ $(document).ready(function() {
     newContact.address = inputtedAddress;
 
     
-  $("ul#contacts").append("<li><span class='contact'>" + newContact.fullName() + "</span></li>");
+    $("ul#contacts").append("<li><span class='contact'>" + newContact.fullName() + "</span></li>");
 
-  $(".contact").last().click(function() {
-    $("#show-contact").show();
+    $(".contact").last().click(function() {
+      $("#contact-display").show();
 
-    $("#show-contact h2").text(newContact.fullName());
-    $(".first-name").text(newContact.firstName);
-    $(".last-name").text(newContact.lastName);
-    $(".address").text(newContact.address);
-  })
+      $("#update-contact h2").text(newContact.fullName());
+      $("#contact-display h2").text(newContact.fullName());
+      $("#existing-first-name").text(newContact.firstName);
+      $("#existing-last-name").text(newContact.lastName);
+      $("#existing-address").text(newContact.address);
 
-    this.reset();
+      this.reset();
+    });
+
+    $("button#update-button").click(function() {
+      $("#contact-display").toggle();
+      $("#update-contact").toggle();
+
+      $("input#edit-first-name").val(newContact.firstName);
+      $("input#edit-last-name").val(newContact.lastName);
+      $("input#edit-address").val(newContact.address);
+    });
+
+    $("form#edit-contact").submit(function(event) {
+      event.preventDefault();
+
+      newContact.firstName = $("input#edit-first-name").val();
+      newContact.lastName = $("input#edit-last-name").val();
+      newContact.address = $("input#edit-address").val();
+      $("#existing-first-name").text(newContact.firstName);
+      $("#existing-last-name").text(newContact.lastName);
+      $("#existing-address").text(newContact.address);      
+
+      $("#contact-display").toggle();
+      $("#update-contact").toggle();
+
+      this.reset();
+    });
+
   });
 });
   
